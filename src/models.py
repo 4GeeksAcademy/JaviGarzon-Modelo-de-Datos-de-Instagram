@@ -31,7 +31,7 @@ class Comment(db.Model):
     id = Column(Integer, primary_key=True)
     comment_text = Column(String(200), nullable=False)
     author_id = Column(Integer, ForeignKey('User.id'), nullable=False)
-    post_id = Column(Integer, ForeignKey('Post.id'), nullable=False)  # Se asume que existe un modelo Post
+    post_id = Column(Integer, ForeignKey('Comentario.id'), nullable=False)  # Se asume que existe un modelo Post
     
     comment = relationship('Comentario', backref='post', lazy=True)
 
