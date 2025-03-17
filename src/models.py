@@ -1,6 +1,8 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, String, Integer, ForeignKey, Enum
+from sqlalchemy import Column, String, Integer, ForeignKey, Enum, app
 from sqlalchemy.orm import relationship
+from eralchemy2 import render_er
+
 
 db = SQLAlchemy()
 
@@ -32,7 +34,7 @@ class Comment(db.Model):
     author_id = Column(Integer, ForeignKey('User.id'), nullable=False)
     post_id = Column(Integer, ForeignKey('Post.id'), nullable=False)  # Se asume que existe un modelo Post
     
-    comments = relationship('Comentario', backref='post', lazy=True)
+    com = relationship('Comentario', backref='post', lazy=True)
 
     def serialize(self):
         return {
@@ -41,6 +43,7 @@ class Comment(db.Model):
             "author": self.author_id, 
             "post": self.post_id, 
         }
+    
 class Comentario (db.Model):
     __tablename__ = 'post'  
     id = Column(Integer, primary_key=True)
@@ -66,3 +69,13 @@ def serialize(self):
             "url": self.url,
             "post": self.post,           
         }
+
+# Crear las tablas
+
+db.create_all()
+try:
+    result = render_er(db, 'diagram.png')
+    print("Success! Check the diagram.png file")
+except Exception as e:
+    print("There was a problem genering the diagram")
+    raise e
