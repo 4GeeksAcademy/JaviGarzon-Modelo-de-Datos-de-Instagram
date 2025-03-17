@@ -1,11 +1,11 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import Column, String, Integer, ForeignKey, Enum, app
+from sqlalchemy import Column, String, Integer, ForeignKey, Enum
 from sqlalchemy.orm import relationship
 
 
 db = SQLAlchemy()
 
-class Usuario(db.Model):
+class User(db.Model):
     __tablename__ = 'user'
     
     id = Column(Integer, primary_key=True)
